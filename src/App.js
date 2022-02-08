@@ -12,10 +12,15 @@ function App() {
  useEffect(() => {
 	 if(!inputValue) return;
 	 fetch(`https://api.github.com/search/users?q=${inputValue}`)
-	 	.then(res => res.json()
-		.then(data => {
-			setUsers(data.items);
-		}))
+	 	.then(res => {
+			 if(!res.ok) {
+				alert('You have reached your Limit! wait a few sec, refresh and try again');
+			 }
+			 return res.json();
+		 })
+		 .then(data => {
+			 setUsers(data.items)
+		 })
  }, [inputValue])
 
   return (
